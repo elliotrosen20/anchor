@@ -18,7 +18,7 @@ export default function AboutPage() {
     <div>
       <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-gray-50">
         <div className="max-w-3xl w-full text-center">
-          <h1 className="text-4xl font-bold mb-4">Why We're Different</h1>
+          <h1 className="text-4xl font-bold mb-4">Why We&apos;re Different</h1>
           <p className="text-lg text-gray-700 mb-6">
             Not just another chatbot — this is a companion built with intention.
           </p>
@@ -38,13 +38,13 @@ export default function AboutPage() {
 
             <h2 className="text-2xl font-semibold mb-3">Judgment-Free Zone</h2>
             <p className="mb-4 text-gray-600">
-              You're not alone. Every intrusive thought you’ve had — someone else has too.
+              You&apos;re not alone. Every intrusive thought you&apos;ve had — someone else has too.
               This space is here to support you with empathy, not judgment.
             </p>
 
             <h2 className="text-2xl font-semibold mb-3">Built With Care</h2>
             <p className="mb-4 text-gray-600">
-              This isn't a general-purpose AI. It’s a specialized tool designed with the nuances of OCD in mind,
+              This isn&apos;t a general-purpose AI. It&apos;s a specialized tool designed with the nuances of OCD in mind,
               including the uncertainty, discomfort, and need for reassurance — all handled with therapeutic awareness.
             </p>
           </div>

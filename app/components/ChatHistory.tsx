@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { useAuth } from '@/lib/auth-context';
-import { chatService, ChatSession } from '@/lib/chat-service';
+import { chatService } from '@/lib/chat-service';
 import { useChatContext } from '@/lib/chat-context';
 
 interface ChatHistoryProps {

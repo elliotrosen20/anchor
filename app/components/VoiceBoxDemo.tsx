@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { useDemoContext } from '@/lib/demo-context';
 
 type Message = {
@@ -20,11 +20,7 @@ export default function VoiceBox({ onTextModeToggle }: VoiceBoxDemoProps) {
 
   const {
     messages,
-    setMessages,
     lastMessage,
-    setLastMessage,
-    isLoading,
-    setIsLoading,
     addMessage,
   } = useDemoContext();
 

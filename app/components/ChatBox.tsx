@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, use } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { chatService } from '@/lib/chat-service';
 import { useChatContext } from '@/lib/chat-context';

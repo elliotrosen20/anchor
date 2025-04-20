@@ -1,7 +1,7 @@
 'use client';
 
 import { useDemoContext } from '@/lib/demo-context';
-import { useState, useRef, useEffect, use } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -16,7 +16,7 @@ export default function ChatBox({ onVoiceModeToggle }: ChatBoxDemoProps) {
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const { messages, setMessages, isLoading, setIsLoading, addMessage } = useDemoContext();
+  const { messages, isLoading, setIsLoading, addMessage } = useDemoContext();
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

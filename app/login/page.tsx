@@ -5,14 +5,12 @@ import { useAuth } from '@/lib/auth-context';
 import Link from 'next/link';
 import Image from 'next/image';
 import logo from '@/public/logo.svg';
-import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter(); 
   
   const { signIn } = useAuth();
 

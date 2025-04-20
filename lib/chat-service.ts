@@ -49,7 +49,12 @@ export const chatService = {
     }
     
     const sessionsWithLastMessage = await Promise.all(
-      data.map(async (session: any) => {
+      data.map(async (session: {
+        id: string;
+        title: string;
+        created_at: string;
+        updated_at: string;
+      }) => {
         const { data: messages } = await supabase
           .from('messages')
           .select('content, role')
@@ -83,10 +88,15 @@ export const chatService = {
       return [];
     }
     
-    return data.map((message: any) => ({
+    return data.map((message: {
+      id: string;
+      content: string;
+      role: string;
+      created_at: string;
+    }) => ({
       id: message.id,
       content: message.content,
-      role: message.role,
+      role: message.role as 'user' | 'assistant',
       createdAt: message.created_at
     }));
   },

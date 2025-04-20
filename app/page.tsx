@@ -4,11 +4,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import logo from '@/public/logo.svg';
 import { useAuth } from '@/lib/auth-context';
-import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const { user, isLoading } = useAuth();
-  const router = useRouter();
 
   console.log("Home page rendering. Auth state:", { user, isLoading });
 
@@ -75,7 +73,7 @@ export default function Home() {
                 href="/chat"
                 className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition block"
               >
-                Let's talk
+                Let&apos;s talk
               </Link>
             ) : (
               <>

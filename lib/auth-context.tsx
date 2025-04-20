@@ -5,16 +5,18 @@ import supabase from './utils/supabase';
 import { User, Session } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 
+type AuthError = { message: string } | null;
+
 type AuthContextType = {
   user: User | null;
   session: Session | null;
   isLoading: boolean;
   signUp: (email: string, password: string) => Promise<{
-    error: any | null;
+    error: AuthError;
     success: boolean;
   }>;
   signIn: (email: string, password: string) => Promise<{
-    error: any | null;
+    error: AuthError;
     success: boolean;
   }>;
   signOut: () => Promise<void>;
@@ -62,12 +64,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         password,
       });
       
-      if (error) {
+      if (error && error instanceof Error) {
         return { error, success: false };
       }
       
       return { error: null, success: true };
-    } catch (error) {
+    } catch (err) {
+      const error = err as Error;
+      console.error("Sign up error:", error);
       return { error, success: false };
     }
   };
@@ -82,7 +86,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       console.log("Sign in result:", { error });
       
-      if (error) {
+      if (error && error instanceof Error) {
         return { error, success: false };
       }
 
@@ -93,7 +97,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       
       router.push('/chat');
       return { error: null, success: true };
-    } catch (error) {
+    } catch (err) {
+      const error = err as Error;
       console.error("Sign in error:", error);
       return { error, success: false };
     }
