@@ -1,12 +1,9 @@
-// lib/auth-context.tsx
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import supabase from './utils/supabase'; // Import from your existing location
+import supabase from './utils/supabase';
 import { User, Session } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
-
-// Rest of the auth context code remains the same
 
 type AuthContextType = {
   user: User | null;
