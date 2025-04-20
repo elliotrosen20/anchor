@@ -151,10 +151,8 @@ export const chatService = {
       }
     }
   },
-  // Add this function to your chat-service.ts
   async deleteChatSession(sessionId: string, userId: string): Promise<boolean> {
     try {
-      // First delete all messages in the session
       console.log('Deletion parameters:', {
         sessionId, 
         userId, 
@@ -162,7 +160,6 @@ export const chatService = {
         userIdType: typeof userId
       });
       
-      // Then also query to confirm the record exists
       const { data: sessionCheck, error: sessionCheckError } = await supabase
         .from('chat_sessions')
         .select('*')
@@ -209,7 +206,6 @@ export const chatService = {
         return false;
       }
       
-      // Then delete the session itself
       const { data: sessionDeleteData, error: sessionError } = await supabase
         .from('chat_sessions')
         .delete()
