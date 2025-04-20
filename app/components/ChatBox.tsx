@@ -1,15 +1,62 @@
-import { useState, useRef, useEffect } from 'react';
+'use client';
+
+import { useState, useRef, useEffect, use } from 'react';
+import { useAuth } from '@/lib/auth-context';
+import { chatService } from '@/lib/chat-service';
+import { useChatContext } from '@/lib/chat-context';
 
 type Message = {
   role: 'user' | 'assistant';
   content: string;
 };
 
-export default function ChatBox() {
+interface ChatBoxProps {
+  sessionId: string;
+  onVoiceModeToggle: () => void;
+}
+
+export default function ChatBox({ sessionId, onVoiceModeToggle }: ChatBoxProps) {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { user } = useAuth();
+  const { updateSessionOrder } = useChatContext();
+
+  useEffect(() => {
+    if (sessionId) {
+      loadMessages();
+    }
+  }, [sessionId]);
+
+  const loadMessages = async () => {
+    try {
+      if (!sessionId || !user) return;
+      
+      const chatMessages = await chatService.getChatMessages(sessionId);
+      setMessages(chatMessages.map(msg => ({
+        role: msg.role,
+        content: msg.content
+      })));
+    } catch (error) {
+      console.error('Failed to load messages:', error);
+    }
+  };
+
+  const saveMessage = async (message: Message) => {
+    try {
+      if (!sessionId || !user) return;
+      
+      await chatService.addChatMessage(
+        sessionId,
+        user.id,
+        message.content,
+        message.role
+      );
+    } catch (error) {
+      console.error('Failed to save message:', error);
+    }
+  };
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -24,6 +71,8 @@ export default function ChatBox() {
     setInput('');
     setIsLoading(true);
     
+    await saveMessage(userMessage);
+
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -43,20 +92,33 @@ export default function ChatBox() {
       }
       
       const data = await response.json();
-      
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: data.content 
-      }]);
+
+      setIsLoading(false);
+
+      setTimeout(() => {
+        const assistantMessage: Message = {
+          role: 'assistant',
+          content: data.content
+        }
+
+        setMessages(prev => [...prev, assistantMessage]);
+      }, 10)
+
+      await saveMessage({
+        role: 'assistant',
+        content: data.content
+      });
     } catch (error) {
       console.error('Error:', error);
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: 'Sorry, I encountered an error. Please try again.' 
-      }]);
-    } finally {
       setIsLoading(false);
+      setTimeout(() => {
+        setMessages(prev => [...prev, { 
+          role: 'assistant', 
+          content: 'Sorry, I encountered an error. Please try again.' 
+        }]);
+      }, 10)
     }
+    updateSessionOrder(sessionId);
   };
 
   return (
@@ -92,7 +154,25 @@ export default function ChatBox() {
         )}
         <div ref={messagesEndRef} />
       </div>
-      
+      <div className="p-2 flex justify-end">
+        <div className="flex justify-between gap-3 items-center">
+          <div>
+            Talk to me instead?
+          </div>
+          <button
+            onClick={onVoiceModeToggle}
+            className="bg-blue-500 text-white rounded-full p-2"
+            title="Switch to voice mode"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" y1="19" x2="12" y2="23"></line>
+              <line x1="8" y1="23" x2="16" y2="23"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
       <form onSubmit={handleSubmit} className="border-t p-4">
         <div className="flex space-x-2">
           <input
