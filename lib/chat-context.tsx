@@ -1,4 +1,3 @@
-// lib/chat-context.tsx
 'use client';
 
 import { createContext, useContext, useState, ReactNode, useCallback } from 'react';
@@ -37,7 +36,6 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  // Add a new function to refresh sessions from the database
   const refreshSessions = useCallback(async (userId: string) => {
     if (!userId) return;
     
