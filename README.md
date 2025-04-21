@@ -6,7 +6,7 @@ A full-stack web application that provides a voice- and text-based conversationa
 
 ## Demo
 
-Live App: *anchor-iel2-3530ouym9-elliotrosen20s-projects.vercel.app*
+Live App: *anchor-iel2.vercel.app*
 
 ---
 
