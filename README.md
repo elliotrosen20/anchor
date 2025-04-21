@@ -6,8 +6,7 @@ A full-stack web application that provides a voice- and text-based conversationa
 
 ## Demo
 
-Live App: *https://your-app-link.vercel.app*  
-Demo Video: *https://your-demo-video-link.com* (optional)
+Live App: *anchor-iel2-3530ouym9-elliotrosen20s-projects.vercel.app*
 
 ---
 
