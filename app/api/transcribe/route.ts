@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { SpeechClient, protos } from '@google-cloud/speech';
-import path from 'path';
 
 export async function POST(request: Request) {
   try {
