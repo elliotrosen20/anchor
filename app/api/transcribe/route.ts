@@ -13,8 +13,12 @@ export async function POST(request: Request) {
     
     const buffer = Buffer.from(await audioFile.arrayBuffer());
     
+    // const speechClient = new SpeechClient({
+    //   keyFilename: path.resolve(process.cwd(), process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON!)
+    // });
+    const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON || '');
     const speechClient = new SpeechClient({
-      keyFilename: path.resolve(process.cwd(), process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON!)
+      credentials: credentials
     });
     
     const speechRequest = {
