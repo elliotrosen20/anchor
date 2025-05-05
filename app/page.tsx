@@ -93,7 +93,7 @@ export default function Home() {
                   href="/demo"
                   className="bg-white border border-blue-400 text-blue-500 px-6 py-3 rounded-lg font-medium hover:bg-blue-50 transition block"
                 >
-                  Try a demo
+                  Try a chat demo
                 </Link>
               </>
             )
